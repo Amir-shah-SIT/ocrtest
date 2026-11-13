@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{%block head%}{%endblock%}
+
+{%block body%}
+    <form action="#" method="POST">
+<form action="#" method="POST">
+        <!-- Phone Input Field -->
+        <div>
+            <label for="phone">Phone Number:</label><br>
+            <!-- Fixed: Using proper Jinja2 print syntax and default filter -->
+            <input type="tel" id="phone" name="phone" placeholder="123-456-7890" value="{{ phone | default('') }}" required>
+        </div>
+        
+        <br>
+
+        <!-- Message Input Field -->
+        <div>
+            <label for="message">Message:</label><br>
+            <!-- Fixed: Textarea uses inner content instead of value attribute -->
+            <textarea id="message" name="message" rows="4" cols="30" placeholder="Type your message here..." required>{{ message | default('') }}</textarea>
+        </div>
+
+        <br>
+
+        <!-- Submit Button -->
+        <button type="submit">Send</button>
+    </form>
+{%endblock%}

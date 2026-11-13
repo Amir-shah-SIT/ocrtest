@@ -1,0 +1,33 @@
+body {
+    display: flex;           /* Turns body into a flex container */
+    justify-content: center; /* Centers content horizontally */
+    align-items: center;     /* Centers content vertically */
+    min-height: 100vh;       /* Makes the body span the full screen height */
+    margin: 0;               /* Removes default browser margins */
+}
+.img-container {
+width: 100%;
+max-width: 800px;
+height: 60vh; /* Limits height to 60% of the screen */
+margin: 0 auto;
+}
+img {
+max-width: 100%;
+display: block;
+}
+button {
+margin-top: 15px;
+padding: 10px 20px;
+font-size: 16px;
+align-items: center;
+cursor: pointer;
+}
+.parent-container {
+  display: flex;
+  align-items: center; /* Optional: Aligns them vertically in the center */
+  justify-content: center;
+  gap: 40px;
+}
+.crop-header{
+  text-align: center;
+}

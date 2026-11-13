@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{%block head%}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+{%endblock%}
+
+{%block body%}
+<div class="parent-container">
+    <form id="cropForm" method="post" action="{{ url_for('crop_page', filename=filename) }}" class="form-wrapper">
+        <div style="display: flex; gap: 40px; width: 100%; justify-content: center; flex-wrap: wrap;">
+            <!-- Image 1 -->
+            <div class="crop-box">
+                <h3 class="crop-header"> Crop the Phone Number </h3>
+                <div class="img-container">
+                    <img id="imageToCrop1" src="{{ url_for('uploaded_file', filename=filename) }}" alt="Source Image 1">
+                </div>
+                <input type="hidden" name="image_id_1" value="1">
+                <input type="hidden" name="x1" id="x1">
+                <input type="hidden" name="y1" id="y1">
+                <input type="hidden" name="width1" id="width1">
+                <input type="hidden" name="height1" id="height1">
+                <label class="crop-toggle">
+                    <input type="checkbox" id="toggleCrop1"> Save crop for Image 1
+                </label>
+            </div>
+            <!-- Image 2 -->
+            <div class="crop-box">
+                <h3 class="crop-header"> Crop the Message </h3>
+                <div class="img-container">
+                    <img id="imageToCrop2" src="{{ url_for('uploaded_file', filename=filename2) }}" alt="Source Image 2">
+                </div>
+                <input type="hidden" name="image_id_2" value="2">
+                <input type="hidden" name="x2" id="x2">
+                <input type="hidden" name="y2" id="y2">
+                <input type="hidden" name="width2" id="width2">
+                <input type="hidden" name="height2" id="height2">
+                <label class="crop-toggle">
+                    <input type="checkbox" id="toggleCrop2"> Save crop for Image 2
+                </label>
+            </div>
+        </div>
+        <button type="button" id="cropButton" disabled>Crop & Save Images</button>
+    </form>
+</div>
+
+<script>
+    // Initialize Cropper 1
+    const cropper1 = new Cropper(document.getElementById('imageToCrop1'), {
+        aspectRatio: NaN,
+        viewMode: 1,
+        responsive: true,
+    });
+
+    // Initialize Cropper 2
+    const cropper2 = new Cropper(document.getElementById('imageToCrop2'), {
+        aspectRatio: NaN,
+        viewMode: 1,
+        responsive: true,
+    });
+
+    const checkbox1 = document.getElementById('toggleCrop1');
+    const checkbox2 = document.getElementById('toggleCrop2');
+    const button = document.getElementById('cropButton');
+
+    // Function to check both checkboxes and update UI/Button state
+    function updateState() {
+        // Toggle Cropper 1 enabled/disabled state based on checkbox
+        if (checkbox1.checked) {
+            cropper1.disable();
+        } else {
+            cropper1.enable();
+        }
+
+        // Toggle Cropper 2 enabled/disabled state based on checkbox
+        if (checkbox2.checked) {
+            cropper2.disable();
+        } else {
+            cropper2.enable();
+        }
+
+        // Enable button ONLY if both checkboxes are checked
+        if (checkbox1.checked && checkbox2.checked) {
+            button.disabled = false;
+        } else {
+            button.disabled = true;
+        }
+    }
+
+    // Attach event listeners to both checkboxes
+    checkbox1.addEventListener('change', updateState);
+    checkbox2.addEventListener('change', updateState);
+
+    // Form submission
+    button.addEventListener('click', function () {
+        const data1 = cropper1.getData(true);
+        document.getElementById('x1').value = data1.x;
+        document.getElementById('y1').value = data1.y;
+        document.getElementById('width1').value = data1.width;
+        document.getElementById('height1').value = data1.height;
+
+        const data2 = cropper2.getData(true);
+        document.getElementById('x2').value = data2.x;
+        document.getElementById('y2').value = data2.y;
+        document.getElementById('width2').value = data2.width;
+        document.getElementById('height2').value = data2.height;
+
+        document.getElementById('cropForm').submit();
+    });
+</script>
+{%endblock%}

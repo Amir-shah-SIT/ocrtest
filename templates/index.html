@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block head %}
+    <title>Scam message check</title>
+{%endblock%}
+
+{%block body%}
+  <form method="POST" enctype="multipart/form-data">
+    <div>
+      <h2>Upload an Image</h2>
+      <input type="file" name="file" accept="image/*" required>
+      <br><br>
+      <input type="submit" value="Upload Image">
+    </div>
+  </form>
+{%endblock%}
